@@ -1,7 +1,7 @@
 <template>
   <div class="CategoryList scroll">
     <div v-for="(category, k) in categories" :key="k">
-      <div class="CategoryList__items" @click="filterCategory(category)">
+      <div :class="category == selectedCategory ? 'CategoryList__items item_selected' : 'CategoryList__items'" @click="filterCategory(category)">
         {{ category }}
       </div>
     </div>
@@ -30,7 +30,9 @@ function getCategories() {
   })
 }
 
+const selectedCategory = ref('')
 function filterCategory(nameCategory) {
+  selectedCategory.value = nameCategory
   emit('filterCategory', nameCategory)
 }
 
@@ -45,6 +47,11 @@ onMounted(() => {
   display: flex;
   padding-left: 0px;
   padding-right: 0px;
+
+  .item_selected {
+    background: #2196F3;
+    color: white;
+  }
 
   &__items {
     cursor: pointer;
